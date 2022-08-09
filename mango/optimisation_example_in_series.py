@@ -38,8 +38,7 @@ print('rmse of baseline is:', rmse)
 
 # First step: define the search space of your algorithm
 # usage of range instead of uniform to ensure integers
-param_space = {'n_estimators': range(50, 200),
-               'max_depth': range(3, 10),
+param_space = {'max_depth': range(3, 10),
                'min_samples_split': range(int(0.01*features.shape[0]), int(0.1*features.shape[0])),
                'min_samples_leaf': range(int(0.001*features.shape[0]), int(0.01*features.shape[0])),
                'max_features': ["sqrt", "log2", "auto"]
@@ -54,7 +53,6 @@ count = 0
 def objective(list_parameters):
     global x_train, y_train, x_validation, y_validation, count
 
-    np.random.seed(seed=12345)  # to make reproducible results
     count += 1
     print('count:', count)
 
@@ -84,4 +82,3 @@ best_model = ExtraTreesRegressor(n_jobs=-1, **optimisation_results['best_params'
 best_model.fit(x_train, np.log1p(y_train))
 y_pred = np.exp(best_model.predict(x_test)) - 1  # to get the real value not in log scale
 print('rmse on test:', np.sqrt(mean_squared_error(y_test, y_pred)))
-
