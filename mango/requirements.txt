@@ -1,0 +1,6 @@
+-i https://pypi.org/simple
+scikit-learn==1.1.1
+arm-mango==1.2.0
+pandas==1.4.3
+plotly==5.9.0
+plotly-express==3.0.9
