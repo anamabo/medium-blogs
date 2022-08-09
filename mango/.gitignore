@@ -1,2 +1,5 @@
 .DS_Store
 .idea
+Pipfile
+Pipfile.lock
+mango/.idea
