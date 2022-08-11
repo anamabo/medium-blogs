@@ -32,19 +32,16 @@ class OptimizationMangoParallel:
                       'max_features': ["sqrt", "log2", "auto"]
                       }
 
-    def _objective(self, max_depth, min_samples_split, min_samples_leaf, max_features):
+    def _objective(self, **model_parameters):
         """
         This is the loss function that mango optimizes
         """
-        model_parameters = {'max_depth': max_depth, 'min_samples_split': min_samples_split,
-                            'min_samples_leaf': min_samples_leaf, 'max_features': max_features}
         model = ExtraTreesRegressor(**model_parameters)
         model.fit(self.x_train, np.log1p(self.y_train))  # usage of log1p in the target to normalize its distribution
         log_prediction = model.predict(self.x_validation)
         prediction = np.exp(log_prediction) - 1  # to get the real value not in log scale
         error = np.sqrt(mean_squared_error(self.y_validation, prediction))
         return error
-
 
     def _objective2(self, params_batch):
         global parameters
