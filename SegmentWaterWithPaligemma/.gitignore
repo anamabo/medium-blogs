@@ -1,0 +1,8 @@
+.DS_Store
+.idea
+*.zip
+data/
+data/Mask_cleaned/
+data/Images_cleaned/
+*.png
+*.jepg
