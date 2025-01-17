@@ -13,7 +13,7 @@ Welcome to this repository! Here you find the codes related to the blog post wri
 
 * Activate  it:
 
-```. moirai-moe/bin/activate ```
+```source moirai-moe/bin/activate ```
 
 * Install SalesForce's Uni2TS package. This project contains the implementation of Moirai-MoE.
 Although you can use PyPi to install it, we recommend installing it from the source code to get the latest version.
