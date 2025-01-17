@@ -1,0 +1,14 @@
+.DS_Store
+.idea
+Pipfile
+Pipfile.lock
+*.docx
+*.doc
+venv/
+bin/
+etc/
+lib/
+include/
+share/
+pyvenv.cfg
+*.pyc
