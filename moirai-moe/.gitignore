@@ -12,3 +12,5 @@ include/
 share/
 pyvenv.cfg
 *.pyc
+notes/
+notes/*
