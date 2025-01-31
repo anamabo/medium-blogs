@@ -14,3 +14,7 @@ pyvenv.cfg
 *.pyc
 notes/
 notes/*
+*.xlsx
+data/forecasting/*
+data/forecasting/
+notebooks/explore_data.ipynb
