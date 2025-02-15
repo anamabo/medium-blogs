@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "moiraimoetest"
+version = "0.0.1"
+description = ""
+authors = ["CAMB"]
+
+[tool.poetry.dependencies]
+python = "~3.12"
+ipykernel = "^6.29.2"
+torch = "2.4.0"
+uni2ts = "1.2.0"
+pandas = "2.1.4"
+matplotlib = "3.10.0"
+statsmodels = "0.14.4"
+
+[tool.poetry.group.dev.dependencies]
+
