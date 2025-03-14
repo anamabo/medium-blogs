@@ -8,11 +8,16 @@ Welcome to this repository! Here you find the codes related to the blog post wri
 * Poetry (e.g. ```brew install poetry```)
 
 ### Set up of the Python environment
-Type: 
+* To get all the required packages, type: 
 
 ```poetry install ```
 
-To get all the required packages.
-
 Set up your Python interpreter in your IDE to use the virtual environment you just created.
 
+* Create a Jupyter kernel called ```moirae-moe``` to run the notebooks:
+
+```python -m ipykernel install --user --name=moirae-moe```
+
+### Structure of the repository
+* ```notebooks```: contains the notebooks to run the experiments.
+* ```scripts```: contains some functions to analyze time series data.
