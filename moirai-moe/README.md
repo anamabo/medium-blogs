@@ -4,20 +4,15 @@ Welcome to this repository! Here you find the codes related to the blog post wri
 [TBD]().
 
 ### Requirements
-* Python >=3.12
+* Python 3.12
+* Poetry (e.g. ```brew install poetry```)
 
-### Installation steps
-* Create a virtual environment:
+### Set up of the Python environment
+Type: 
 
-```virtualenv moirai-moe ```
+```poetry install ```
 
-* Activate  it:
+To get all the required packages.
 
-```source moirai-moe/bin/activate ```
+Set up your Python interpreter in your IDE to use the virtual environment you just created.
 
-* Install SalesForce's Uni2TS package. This project contains the implementation of Moirai-MoE.
-Although you can use PyPi to install it, we recommend installing it from the source code to get the latest version.
-
-```pip install "git+https://github.com/SalesforceAIResearch/uni2ts.git#egg=uni2ts[notebook]"```
-
-* Set up your Python interpreter in your IDE to use the virtual environment you created.
