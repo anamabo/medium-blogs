@@ -40,7 +40,7 @@ def test_autocorrelation(ts: pd.DataFrame, colname: str, lags: int) -> Tuple[flo
     return lb_stat, pval
 
 
-def test_stationarity(ts: pd.DataFrame, colname: str) -> Tuple:
+def test_stationarity(ts: pd.DataFrame, colname: str):
     """ Augmented Dickey-Fuller test for stationarity
         H0= TS is not stationary => if statistics > crit vals, we can not reject Ho (left test).
     """

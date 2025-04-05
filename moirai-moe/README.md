@@ -4,20 +4,20 @@ Welcome to this repository! Here you find the codes related to the blog post wri
 [TBD]().
 
 ### Requirements
-* Python >=3.12
+* Python 3.12
+* Poetry (e.g. ```brew install poetry```)
 
-### Installation steps
-* Create a virtual environment:
+### Set up of the Python environment
+* To get all the required packages, type: 
 
-```virtualenv moirai-moe ```
+```poetry install ```
 
-* Activate  it:
+Set up your Python interpreter in your IDE to use the virtual environment you just created.
 
-```source moirai-moe/bin/activate ```
+* Create a Jupyter kernel called ```moirae-moe``` to run the notebooks:
 
-* Install SalesForce's Uni2TS package. This project contains the implementation of Moirai-MoE.
-Although you can use PyPi to install it, we recommend installing it from the source code to get the latest version.
+```python -m ipykernel install --user --name=moirae-moe```
 
-```pip install "git+https://github.com/SalesforceAIResearch/uni2ts.git#egg=uni2ts[notebook]"```
-
-* Set up your Python interpreter in your IDE to use the virtual environment you created.
+### Structure of the repository
+* ```notebooks```: contains the notebooks to run the experiments.
+* ```scripts```: contains some functions to analyze time series data.

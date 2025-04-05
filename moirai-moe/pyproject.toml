@@ -2,7 +2,8 @@
 name = "moiraimoetest"
 version = "0.0.1"
 description = ""
-authors = ["CAMB"]
+authors = ["CAMB", "JACG"]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "~3.12"
@@ -12,6 +13,7 @@ uni2ts = "1.2.0"
 pandas = "2.1.4"
 matplotlib = "3.10.0"
 statsmodels = "0.14.4"
+jupyter = "^1.1.1"
 
 [tool.poetry.group.dev.dependencies]
 
