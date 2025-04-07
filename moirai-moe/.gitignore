@@ -18,3 +18,4 @@ notes/*
 data/forecasting/*
 data/forecasting/
 notebooks/explore_data.ipynb
+.ipynb_checkpoints/
