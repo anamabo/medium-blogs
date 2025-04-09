@@ -53,3 +53,14 @@ def test_stationarity(ts: pd.DataFrame, colname: str):
         print(f"Accept H0, thus the data is not stationary. ADF statistic: {adf_statistic}, p-value: {p_value}")
 
     return result
+
+
+def explore_timeseries(table: pd.DataFrame, ycolname: str, period: int = 365, model: str = "additive"):
+    print("Decomposition:")
+    _ = seasonal_decompose_plot(table, colname=ycolname, period=period, model=model)
+
+    print("Auto correlation test:")
+    _, _ = test_autocorrelation(table, colname=ycolname, lags=period)
+
+    print("Stationarity test:")
+    _ = test_stationarity(table, colname=ycolname)
