@@ -71,8 +71,12 @@ def get_predictions(forecast_tensor: torch.Tensor, train_set: pd.DataFrame, date
     return all_forecast_ts
 
 
-def plot_results(results_df: pd.DataFrame, target_colname: str):
-    fig1, ax = plt.subplots(nrows=1, ncols=1, figsize=(7, 6))
+def plot_results(results_df: pd.DataFrame, target_colname: str, title: str, figsize = (7, 6)):
+    fig1, ax = plt.subplots(nrows=1, ncols=1, figsize=figsize)
+
+    # Change font to Times New Roman
+    plt.rcParams['font.family'] = 'Times New Roman'
+
     ax.plot(results_df.index, results_df["median_forecast"].values, "g-", label="median forecast")
     ax.plot(results_df.index, results_df[target_colname].values, "b-", label=target_colname)
     ax.fill_between(
@@ -83,8 +87,20 @@ def plot_results(results_df: pd.DataFrame, target_colname: str):
         alpha=0.2,
         label="prediction 90%",
     )
+    ax.set_xlabel('date', size=16)
+    ax.set_ylabel('Value', size=16)
+    ax.set_title(title, size=16)
     ax.legend()
     plt.xticks(rotation=45, ha='right')
+
+    # Make plot's frame invisible
+    plt.gca().spines['top'].set_visible(False)
+    plt.gca().spines['right'].set_visible(False)
+    plt.gca().spines['left'].set_visible(False)
+    plt.gca().spines['bottom'].set_visible(False)
+
+    # Add a grid for better newspaper aesthetics
+    plt.grid(True, linestyle='--', linewidth=0.5)
 
     # Improve spacing and aspect ratio
     plt.tight_layout()  # Adjusts the plot to ensure labels don't get cut off
