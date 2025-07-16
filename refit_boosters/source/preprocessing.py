@@ -82,7 +82,7 @@ def clean_data(raw_data_fname: str, output_data_folder: str, output_data_fname: 
     logging.info(f"The cleaned file is stored in {os.path.join(output_data_folder, output_data_fname)}")
 
 
-def main():
+def run_preprocessing_pipeline():
     input_data_folder = os.path.join(os.getcwd(), "refit_boosters", "data")
     raw_data_filename = os.path.join(input_data_folder, "2022", "heart_2022_no_nans.csv")
     preprocessed_data_folder = os.path.join(input_data_folder, "cleaned")
@@ -100,4 +100,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    run_preprocessing_pipeline()
