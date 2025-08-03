@@ -16,3 +16,4 @@ notes/*
 data/
 .env
 .ipynb_checkpoints/
+poetry.lock
