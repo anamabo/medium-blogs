@@ -1,27 +1,26 @@
-# Improve boosting models
-Booster methods allows refit and update models option.
+# Incremental learning in boosting methods
+Welcome to the repository of incremental learning in boosting methods. Here you find the code 
+corresponding to the blog post: [Incremental learning in LightGBM and XGBoost](https://medium.com/p/9641c2e68d4b/edit). 
 
-In this repository we explore some ways to take advantage of it.
 
 ### Requirements
 * Python 3.11
 * Poetry (e.g. ```brew install poetry```)
 
 ### Set up of the Python environment
-* To get all the required packages, type: 
+To create an environment with all the required packages, type: 
 
 ```poetry install ```
 
 Set up your Python interpreter in your IDE to use the virtual environment you just created.
 
-* Create a Jupyter kernel called `boosters`:
+To run the Jupyter Notebooks, you need to create a Jupyter kernel called `boosters`:
 
 ```
 python -m ipykernel install --user --name=boosters
 ```
 
-### Set up environment variables
-* Make a copy of the file `env_example` and rename it as `.env`
-* Add your kaggle credentials. Intructions to get them are [here](https://www.kaggle.com/docs/api/#getting-started-installation-&-authentication), in the section ***Authentication***.
 
 ### Entry points
+In the folder `notebooks/` you find implementations of incremental learning for classification and regression 
+for both LightGBM and XGBoost. 
