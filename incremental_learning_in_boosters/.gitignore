@@ -14,6 +14,5 @@ notes/
 notes/*
 *.xlsx
 data/
-.env
 .ipynb_checkpoints/
 poetry.lock
