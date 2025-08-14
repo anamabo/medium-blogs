@@ -1,6 +1,6 @@
 # Incremental learning in boosting methods
 Welcome to the repository of incremental learning in boosting methods. Here you find the code 
-corresponding to the blog post: [Incremental learning in LightGBM and XGBoost](https://medium.com/p/9641c2e68d4b/edit). 
+corresponding to the blog post: [Incremental learning in LightGBM and XGBoost](https://medium.com/data-science-collective/incremental-learning-in-lightgbm-and-xgboost-9641c2e68d4b). 
 
 
 ### Requirements
