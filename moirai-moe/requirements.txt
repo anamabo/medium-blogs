@@ -1,0 +1,7 @@
+-i https://pypi.org/simple
+uni2ts==1.2.0
+pandas==2.1.4
+ipykernel==6.29.5
+jupyter==1.1.1
+matplotlib==3.10.0
+statsmodels==0.14.4
