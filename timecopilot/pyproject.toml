@@ -1,0 +1,18 @@
+[project]
+name = "timecopilottest"
+version = "0.0.2"
+description = ""
+package-mode = false
+
+requires-python = "==3.12.*"
+
+dependencies = [
+    "ipykernel>=7.2.0",
+    "jupyter>=1.1.1",
+    "pandas>=2.1.2<2.2.0",
+    "sktime>=0.40.1",
+    "timecopilot>=0.0.23",
+]
+
+[tool.uv]
+required-version = ">=0.8.4"
