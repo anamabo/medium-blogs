@@ -32,8 +32,11 @@ def main():
     df['y'] = df['y'].fillna(0)
     df['unique_id'] = 'all'
 
+    df_train = df[df['ds'] < '2023-01-02'].copy()
+    df_test = df[df['ds'] >= '2023-01-02'].copy()
+
     tc = TimeCopilot(llm="<The LLM you selected>", retries=3)
-    result = tc.forecast(df=df[cols], freq='D')
+    result = tc.forecast(df=df_train[cols], freq='D')
     print(result)
 
 

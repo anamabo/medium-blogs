@@ -52,6 +52,9 @@ def main():
     df['y'] = df['y'].fillna(0)
     df['unique_id'] = 'all'
 
+    df_train = df[df['ds'] < '2023-01-02'].copy()
+    df_test = df[df['ds'] >= '2023-01-02'].copy()
+
     st = time.time()
     tc = TimeCopilot(llm="The LLM you selected", retries=3)
     # listing all default models that timecopilot uses for forecasting and cross-validation.
@@ -60,7 +63,7 @@ def main():
     #     HistoricAverage(), IMAPA(), SeasonalNaive(), Theta(), ZeroModel(), Prophet(),
     # ]
 
-    result = tc.forecast(df=df)
+    result = tc.forecast(df=df_train)
     print(f"Run Time: {time.time() - st}")
     print(result.output.tsfeatures_analysis)
 
