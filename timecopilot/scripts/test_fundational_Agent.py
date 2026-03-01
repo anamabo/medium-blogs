@@ -20,6 +20,9 @@ def main():
     df["unique_id"] = "dataset1"
     df.rename(columns={date_colname: "ds", target_colname: "y"}, inplace=True)
 
+    df_train = df[df['ds'] < '2023-01-02'].copy()
+    df_test = df[df['ds'] >= '2023-01-02'].copy()
+
     Moirai_Moe = Moirai(
         repo_id="Salesforce/moirai-moe-1.0-R-small",
         context_length=96,
@@ -31,7 +34,7 @@ def main():
 
     tc = TimeCopilot(llm="<The LLM you selected>", forecasters=[Chronos(), Moirai_Moe], retries=3,)
 
-    result = tc.forecast(df=df)
+    result = tc.forecast(df=df_train)
     print(result)
     print(result.output.tsfeatures_analysis)
 

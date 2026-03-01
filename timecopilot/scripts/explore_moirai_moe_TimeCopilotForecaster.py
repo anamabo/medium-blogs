@@ -16,6 +16,9 @@ def main():
     df["unique_id"] = "dataset3"
     df.rename(columns={date_colname: "ds", target_colname: "y"}, inplace=True)
 
+    df_train = df[df['ds'] < '2023-01-02'].copy()
+    df_test = df[df['ds'] >= '2023-01-02'].copy()
+
     Moirai_Moe = Moirai(
         repo_id="Salesforce/moirai-moe-1.0-R-small",
         context_length=96,
@@ -30,7 +33,7 @@ def main():
         models=[Moirai_Moe]
     )
     print(time.time() - st)
-    fcst_df = tcf.forecast(df=df, h=12, level=[80])
+    fcst_df = tcf.forecast(df=df_train, h=12, level=[80])
 
     print(fcst_df)
 

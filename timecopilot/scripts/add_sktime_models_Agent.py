@@ -27,13 +27,16 @@ def main():
     df["unique_id"] = "dataset3"
     df.rename(columns={date_colname: "ds", target_colname: "y"}, inplace=True)
 
+    df_train = df[df['ds'] < '2023-01-02'].copy()
+    df_test = df[df['ds'] >= '2023-01-02'].copy()
+
     trend_forecaster = TrendForecaster()
     exp_smoothing = ExponentialSmoothing()
     tc = TimeCopilot(llm="<The LLM you selected>", 
                      forecasters=[trend_forecaster, exp_smoothing],
                      retries=3,)
 
-    result = tc.forecast(df=df)
+    result = tc.forecast(df=df_train)
     print(result)
 
     answer = tc.query("Which is the best model?")
