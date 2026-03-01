@@ -20,15 +20,16 @@ def main():
     """
     Forecasters from sktime can be easily called from timecopilot.
     """
-    df = pd.read_csv(os.path.join(os.getcwd(), "timecopilot", "data", "dataset3.csv"), parse_dates=True) 
+    df = pd.read_csv(os.path.join(os.getcwd(), "data", "dataset3.csv"), parse_dates=True) 
     date_colname= "date"
     target_colname = "target"
     df[date_colname] = pd.to_datetime(df[date_colname])
     df["unique_id"] = "dataset3"
     df.rename(columns={date_colname: "ds", target_colname: "y"}, inplace=True)
 
-    df_train = df[df['ds'] < '2023-01-02'].copy()
-    df_test = df[df['ds'] >= '2023-01-02'].copy()
+    limit_date = '2014-06-01'
+    df_train = df[df['ds'] < limit_date].copy()
+    df_test = df[df['ds'] >= limit_date].copy()
 
     trend_forecaster = TrendForecaster()
     exp_smoothing = ExponentialSmoothing()
