@@ -18,6 +18,7 @@ from timecopilot.models.foundation.toto import Toto
 from timecopilot.models.ml import AutoLGBM
 # nn models
 from timecopilot.models.neural import AutoNHITS, AutoTFT
+
 import time
 import pandas as pd
 from multiprocessing import Process, freeze_support
@@ -45,20 +46,24 @@ def main():
     df_train = df[df['ds'] < limit_date].copy()
     df_test = df[df['ds'] >= limit_date].copy()
 
+    available_models = [
+        # statistical
+        ADIDA(), AutoARIMA(), AutoCES(), AutoETS(), CrostonClassic(), 
+        DynamicOptimizedTheta(), HistoricAverage(), IMAPA(), 
+        SeasonalNaive(), Theta(), ZeroModel(),
+        # foundational
+        Chronos(), Moirai(), Sundial(), TiRex(), TimesFM(), Toto(),
+        # Machine learning
+        AutoLGBM(),
+        # neural networks
+        AutoNHITS(), AutoTFT(),
+        # prophet
+        Prophet(),
+    ]
+
     st = time.time()
     tcf = TimeCopilotForecaster(
-        models=[
-            # statistical models
-            ADIDA(), AutoARIMA(), AutoCES(), AutoETS(), CrostonClassic(), DynamicOptimizedTheta(), HistoricAverage(), IMAPA(), SeasonalNaive(), Theta(), ZeroModel(),
-            # foundation models
-            Chronos(), Moirai(), Sundial(), TiRex(), TimesFM(), Toto(),  # FlowState(), TabPFN(), TimeGPT(),
-            # ml models
-            AutoLGBM(),  # does not support quantiles
-            # nn models
-            AutoNHITS(), AutoTFT(),
-            # prophet
-            Prophet(),
-        ]
+        models=available_models
     )
     cv_results = tcf.cross_validation(
         df=df_train[cols],
