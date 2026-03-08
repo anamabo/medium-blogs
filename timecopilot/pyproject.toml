@@ -9,7 +9,7 @@ requires-python = "==3.12.*"
 dependencies = [
     "ipykernel>=7.2.0",
     "jupyter>=1.1.1",
-    "pandas>=2.1.2<2.2.0",
+    "pandas>=2.1.2",
     "sktime>=0.40.1",
     "timecopilot>=0.0.23",
 ]

@@ -5041,7 +5041,7 @@ dependencies = [
 requires-dist = [
     { name = "ipykernel", specifier = ">=7.2.0" },
     { name = "jupyter", specifier = ">=1.1.1" },
-    { name = "pandas", specifier = ">=2.1.2,<2.2.0" },
+    { name = "pandas", specifier = ">=2.1.2" },
     { name = "sktime", specifier = ">=0.40.1" },
     { name = "timecopilot", specifier = ">=0.0.23" },
 ]

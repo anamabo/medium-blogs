@@ -41,19 +41,14 @@ def main():
     date_colname= "date"
     target_colname = "target"
     df[date_colname] = pd.to_datetime(df[date_colname])
-    df["unique_id"] = "dataset2"
     df.rename(columns={date_colname: "ds", target_colname: "y"}, inplace=True)
-
-    df_left = pd.DataFrame()
-    df_left['ds'] = pd.date_range(start=df['ds'].min(), end=df['ds'].max(), freq='D')
+    df = df.set_index('ds').resample('D').ffill().reset_index()
+    df["unique_id"] = "dataset2"
     cols = ['unique_id', 'ds', 'y']
 
-    df = pd.merge(df_left, df, how='left', on='ds')
-    df['y'] = df['y'].fillna(0)
-    df['unique_id'] = 'all'
-
-    df_train = df[df['ds'] < '2023-01-02'].copy()
-    df_test = df[df['ds'] >= '2023-01-02'].copy()
+    limit_date = '2023-01-02'
+    df_train = df[df['ds'] < limit_date].copy()
+    df_test = df[df['ds'] >= limit_date].copy()
 
     st = time.time()
     tc = TimeCopilot(llm="The LLM you selected", retries=3)
@@ -63,7 +58,7 @@ def main():
     #     HistoricAverage(), IMAPA(), SeasonalNaive(), Theta(), ZeroModel(), Prophet(),
     # ]
 
-    result = tc.forecast(df=df_train)
+    result = tc.forecast(df=df_train[cols])
     print(f"Run Time: {time.time() - st}")
     print(result.output.tsfeatures_analysis)
 
