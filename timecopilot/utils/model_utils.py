@@ -19,14 +19,14 @@ def plot_results(results_df: pd.DataFrame, target_colname: str, title: str, figs
         label="AutoARIMA prediction 90%",
     )
 
-    ax.plot(results_df.index, results_df["Moirai"].values, "r-", label="Moirai")
+    ax.plot(results_df.index, results_df["Chronos"].values, "r-", label="Chronos")
     ax.fill_between(
         results_df.index,
-        results_df["Moirai-lo-90"].values,
-        results_df["Moirai-hi-90"].values,
+        results_df["Chronos-lo-90"].values,
+        results_df["Chronos-hi-90"].values,
         color="r",
         alpha=0.2,
-        label="Moirai prediction 90%",
+        label="Chronos prediction 90%",
     )
 
     ax.plot(results_df.index, results_df["Prophet"].values, "c-", label="Prophet")
