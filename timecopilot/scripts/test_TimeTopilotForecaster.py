@@ -15,7 +15,7 @@ from timecopilot.models.foundation.timegpt import TimeGPT
 from timecopilot.models.foundation.timesfm import TimesFM
 from timecopilot.models.foundation.toto import Toto
 # ml models
-from timecopilot.models.ml import AutoLGBM
+from timecopilot.models.ml import AutoLGBM, AutoMLForecast
 # nn models
 from timecopilot.models.neural import AutoNHITS, AutoTFT
 
@@ -52,11 +52,14 @@ def main():
         DynamicOptimizedTheta(), HistoricAverage(), IMAPA(), 
         SeasonalNaive(), Theta(), ZeroModel(),
         # foundational
-        Chronos(), Moirai(), Sundial(), TiRex(), TimesFM(), Toto(),
+        Chronos(), Moirai(), Sundial(), TiRex(), Toto(), TimesFM(), 
+            # TimesFM only support the default quantiles
+            # FlowState(), TabPFN(), TimeGPT(), error
         # Machine learning
-        AutoLGBM(),
+        AutoLGBM(), # Level and quantiles are not supported
+            # AutoMLForecast(), error
         # neural networks
-        AutoNHITS(), AutoTFT(),
+            # AutoNHITS(), AutoTFT(), error for cv and forecast
         # prophet
         Prophet(),
     ]
@@ -67,7 +70,7 @@ def main():
     )
     cv_results = tcf.cross_validation(
         df=df_train[cols],
-        h=180,          # Forecast horizon
+        h=90,          # Forecast horizon
         n_windows=3     # Number of CV folds
     )
 
@@ -78,7 +81,7 @@ def main():
     print(time.time() - st)
     eval_df.to_csv('forecaster_eval.csv')
 
-    fcst_df = tcf.forecast(df=df_train, h=180, level=[90])
+    fcst_df = tcf.forecast(df=df_train, h=90) #, level=[90]
     fcst_df.to_csv('forecaster_forecast.csv', index=False)
 
     fig = tcf.plot(df, fcst_df)

@@ -1,0 +1,26 @@
+model_name,type,available_for_forecast,available_for_cross_validation
+ADIDA,statistical,yes,yes
+AutoARIMA,statistical,yes,yes
+AutoCES,statistical,yes,yes
+AutoETS,statistical,yes,yes
+CrostonClassic,statistical,yes,yes
+DynamicOptimizedTheta,statistical,yes,yes
+HistoricAverage,statistical,yes,yes
+IMAPA,statistical,yes,yes
+SeasonalNaive,statistical,yes,yes
+Theta,statistical,yes,yes
+ZeroModel,statistical,yes,yes
+Chronos,foundation,yes,yes
+Moirai,foundation,yes,yes
+Sundial,foundation,yes,yes
+TiRex,foundation,yes,yes
+Toto,foundation,yes,yes
+TimesFM,foundation,only support the default quantiles,only support the default quantiles
+FlowState,foundation,errors,errors
+TabPFN,foundation,errors,errors
+TimeGPT,foundation,errors,errors
+AutoLGBM,ML,Level and quantiles not supported,Level and quantiles not supported
+AutoMLForecast,ML,errors,errors
+AutoNHITS,NN,errors,errors
+AutoTFT,NN,errors,errors
+Prophet,prophet,yes,yes
