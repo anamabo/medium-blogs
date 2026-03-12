@@ -47,20 +47,9 @@ def main():
     df_test = df[df['ds'] >= limit_date].copy()
 
     available_models = [
-        # statistical
-        ADIDA(), AutoARIMA(), AutoCES(), AutoETS(), CrostonClassic(), 
-        DynamicOptimizedTheta(), HistoricAverage(), IMAPA(), 
-        SeasonalNaive(), Theta(), ZeroModel(),
-        # foundational
-        Chronos(), Moirai(), Sundial(), TiRex(), Toto(), TimesFM(), 
-            # TimesFM only support the default quantiles
-            # FlowState(), TabPFN(), TimeGPT(), error
-        # Machine learning
+        AutoARIMA(), 
+        Chronos(), 
         AutoLGBM(), # Level and quantiles are not supported
-            # AutoMLForecast(), error
-        # neural networks
-            # AutoNHITS(), AutoTFT(), error for cv and forecast
-        # prophet
         Prophet(),
     ]
 
@@ -70,22 +59,19 @@ def main():
     )
     cv_results = tcf.cross_validation(
         df=df_train[cols],
-        h=90,          # Forecast horizon
+        h=90,           # Forecast horizon
         n_windows=3     # Number of CV folds
     )
+    print(time.time() - st)
 
     eval_df = evaluate(
         cv_results.drop(columns=["cutoff"]),
         metrics=[mae, rmse],
     )
-    print(time.time() - st)
-    eval_df.to_csv('forecaster_eval.csv')
+    eval_df.to_csv('forecaster_cv_eval.csv')
 
-    fcst_df = tcf.forecast(df=df_train, h=90) #, level=[90]
+    fcst_df = tcf.forecast(df=df_train, h=90)  #, level=[90])
     fcst_df.to_csv('forecaster_forecast.csv', index=False)
-
-    fig = tcf.plot(df, fcst_df)
-    fig.savefig("fig_forecaster_forecast.png")
 
 
 if __name__ == '__main__':

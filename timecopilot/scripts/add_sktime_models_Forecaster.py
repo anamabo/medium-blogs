@@ -114,13 +114,13 @@ def main():
         h=180,          # Forecast horizon
         n_windows=3     # Number of CV folds
     )
+    print(time.time() - st)
 
     eval_df = evaluate(
         cv_results.drop(columns=["cutoff"]),
         metrics=[mae, rmse],
     )
-    print(time.time() - st)
-    eval_df.to_csv('forecaster_eval.csv')
+    eval_df.to_csv('forecaster_cv_eval.csv')
 
     fcst_df = tcf.forecast(df=df_train, h=180)
     fcst_df.to_csv('forecaster_forecast.csv', index=False)
