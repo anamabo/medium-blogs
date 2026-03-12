@@ -8,36 +8,22 @@ def plot_results(results_df: pd.DataFrame, target_colname: str, title: str, figs
 
     # Change font to Times New Roman
     plt.rcParams['font.family'] = 'Times New Roman'
-
-    ax.plot(results_df.index, results_df["AutoARIMA"].values, "g-", label="AutoARIMA")
-    ax.fill_between(
-        results_df.index,
-        results_df["AutoARIMA-lo-90"].values,
-        results_df["AutoARIMA-hi-90"].values,
-        color="g",
-        alpha=0.2,
-        label="AutoARIMA prediction 90%",
+    cmap = plt.get_cmap('viridis')
+    list_models = set(
+        results_df.columns[results_df.columns != target_colname].str.replace(r'-(lo|hi)-90', '', regex=True)
     )
+    colors = [cmap(i) for i in np.linspace(0, 1, len(list_models))]
+    for model, color in zip(list_models, colors):
+        ax.plot(results_df.index, results_df[model].values, color=color, linestyle="-", label=model)
+        ax.fill_between(
+            results_df.index,
+            results_df[f"{model}-lo-90"].values,
+            results_df[f"{model}-hi-90"].values,
+            color=color,
+            alpha=0.2,
+            label=f"{model} prediction 90%",
+        )
 
-    ax.plot(results_df.index, results_df["Chronos"].values, "r-", label="Chronos")
-    ax.fill_between(
-        results_df.index,
-        results_df["Chronos-lo-90"].values,
-        results_df["Chronos-hi-90"].values,
-        color="r",
-        alpha=0.2,
-        label="Chronos prediction 90%",
-    )
-
-    ax.plot(results_df.index, results_df["Prophet"].values, "c-", label="Prophet")
-    ax.fill_between(
-        results_df.index,
-        results_df["Prophet-lo-90"].values,
-        results_df["Prophet-hi-90"].values,
-        color="c",
-        alpha=0.2,
-        label="Prophet prediction 90%",
-    )
     ax.plot(results_df.index, results_df[target_colname].values, "b-", label=target_colname)
 
     ax.set_xlabel('date', size=16)

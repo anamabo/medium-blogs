@@ -125,9 +125,6 @@ def main():
     fcst_df = tcf.forecast(df=df_train, h=180)
     fcst_df.to_csv('forecaster_forecast.csv', index=False)
 
-    fig = tcf.plot(df, fcst_df)
-    fig.savefig("fig_forecaster_forecast.png")
-
 
 if __name__ == '__main__':
     freeze_support()

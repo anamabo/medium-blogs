@@ -1,32 +1,7 @@
 import os
 import pandas as pd
 from timecopilot import TimeCopilot
-from pydantic_ai.models.bedrock import BedrockConverseModel
-
-from pydantic_ai.models.openai import OpenAIChatModel
-from pydantic_ai.providers.openai import OpenAIProvider
-from pydantic_ai.providers.ollama import OllamaProvider
 from multiprocessing import Process, freeze_support
-import time
-
-from timecopilot.models.prophet import Prophet
-# statsmodels
-from timecopilot.models.stats import ADIDA, AutoARIMA, AutoCES, AutoETS, CrostonClassic, DynamicOptimizedTheta, HistoricAverage, IMAPA, SeasonalNaive, Theta, ZeroModel
-# foundation models
-from timecopilot.models.foundation.chronos import Chronos
-from timecopilot.models.foundation.flowstate import FlowState
-from timecopilot.models.foundation.moirai import Moirai
-from timecopilot.models.foundation.sundial import Sundial
-from timecopilot.models.foundation.tabpfn import TabPFN
-from timecopilot.models.foundation.tirex import TiRex
-from timecopilot.models.foundation.timegpt import TimeGPT
-from timecopilot.models.foundation.timesfm import TimesFM
-from timecopilot.models.foundation.toto import Toto
-# ml models
-from timecopilot.models.ml import AutoLGBM
-# nn models
-from timecopilot.models.neural import AutoNHITS, AutoTFT
-
 import nest_asyncio
 
 nest_asyncio.apply()
@@ -50,8 +25,7 @@ def main():
     df_train = df[df['ds'] < limit_date].copy()
     df_test = df[df['ds'] >= limit_date].copy()
 
-    st = time.time()
-    tc = TimeCopilot(llm="The LLM you selected", retries=3)
+    tc = TimeCopilot(llm="<The LLM you selected>", retries=3)
     # listing all default models that timecopilot uses for forecasting and cross-validation.
     # DEFAULT_MODELS: list[Forecaster] = [
     #     ADIDA(), AutoARIMA(), AutoCES(), AutoETS(), CrostonClassic(), DynamicOptimizedTheta(),
@@ -59,16 +33,11 @@ def main():
     # ]
 
     result = tc.forecast(df=df_train[cols])
-    print(f"Run Time: {time.time() - st}")
     print(result.output.tsfeatures_analysis)
 
-    answer = tc.query("Which model performed best?, Are there anomalies?. Show the forecast with the best model for 12 future points.")
-    print(answer.output)
-
-    answer = tc.query("Are there anomalies?")
-    print(answer.output)
-
-    answer = tc.query("Show the forecast with the best model for 12 future points.")
+    answer = tc.query("Which model performed best?,"
+                      "Are there anomalies?."
+                      "Show the forecast with the best model for 12 future points.")
     print(answer.output)
 
 
@@ -80,7 +49,6 @@ if __name__ == '__main__':
 """
 OUTPUT OBTAINED AFTER RUNNING THE CODE
 
-Run Time: 29.149405479431152
 Key feature take‑aways:
 - series_length = 1392 (daily data over ~3.8 years).
 - flat_spots = 346, indicating many consecutive zeroes at the start and at the end.
