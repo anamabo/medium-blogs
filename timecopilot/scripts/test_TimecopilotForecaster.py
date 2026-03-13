@@ -4,31 +4,18 @@ from timecopilot import TimeCopilotForecaster
 # prophet
 from timecopilot.models.prophet import Prophet
 # statsmodels
-from timecopilot.models.stats import ADIDA, AutoARIMA, AutoCES, AutoETS, CrostonClassic, DynamicOptimizedTheta, HistoricAverage, IMAPA, SeasonalNaive, Theta, ZeroModel
+from timecopilot.models.stats import AutoARIMA
 # foundation models
 from timecopilot.models.foundation.chronos import Chronos
-from timecopilot.models.foundation.flowstate import FlowState
-from timecopilot.models.foundation.moirai import Moirai
-from timecopilot.models.foundation.sundial import Sundial
-from timecopilot.models.foundation.tabpfn import TabPFN
-from timecopilot.models.foundation.tirex import TiRex
-from timecopilot.models.foundation.timegpt import TimeGPT
-from timecopilot.models.foundation.timesfm import TimesFM
-from timecopilot.models.foundation.toto import Toto
-# ml models
-from timecopilot.models.ml import AutoLGBM, AutoMLForecast
-# nn models
-from timecopilot.models.neural import AutoNHITS, AutoTFT
 
 import time
 import pandas as pd
-from multiprocessing import Process, freeze_support
+from multiprocessing import freeze_support
 from utilsforecast.evaluation import evaluate
 from utilsforecast.losses import mae, rmse
 
 sys.path.append(os.getcwd())
-sys.path.insert(1, os.path.join(os.path.dirname(os.getcwd()), "utils"))
-from model_utils import plot_results
+from utils.model_utils import plot_results
 
 
 def plot_forecast(df_train, df_test, fcst_df, h):
@@ -55,7 +42,7 @@ def main():
     dataset2.csv contains a missing date, which causes timecopilot errors, here we show how to deal with it
     missing date 2020-03-06,14
     """
-    df = pd.read_csv(os.path.join("..", "data", "dataset2.csv"), parse_dates=True)
+    df = pd.read_csv(os.path.join("data", "dataset2.csv"), parse_dates=True)
     date_colname= "date"
     target_colname = "target"
     df[date_colname] = pd.to_datetime(df[date_colname])
@@ -71,7 +58,6 @@ def main():
     available_models = [
         AutoARIMA(), 
         Chronos(),
-        # AutoLGBM(),  # Level and quantiles are not supported
         Prophet(),
     ]
 
