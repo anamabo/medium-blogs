@@ -1,32 +1,7 @@
 import os
 import pandas as pd
 from timecopilot import TimeCopilot
-from pydantic_ai.models.bedrock import BedrockConverseModel
-
-from pydantic_ai.models.openai import OpenAIChatModel
-from pydantic_ai.providers.openai import OpenAIProvider
-from pydantic_ai.providers.ollama import OllamaProvider
 from multiprocessing import Process, freeze_support
-import time
-
-from timecopilot.models.prophet import Prophet
-# statsmodels
-from timecopilot.models.stats import ADIDA, AutoARIMA, AutoCES, AutoETS, CrostonClassic, DynamicOptimizedTheta, HistoricAverage, IMAPA, SeasonalNaive, Theta, ZeroModel
-# foundation models
-from timecopilot.models.foundation.chronos import Chronos
-from timecopilot.models.foundation.flowstate import FlowState
-from timecopilot.models.foundation.moirai import Moirai
-from timecopilot.models.foundation.sundial import Sundial
-from timecopilot.models.foundation.tabpfn import TabPFN
-from timecopilot.models.foundation.tirex import TiRex
-from timecopilot.models.foundation.timegpt import TimeGPT
-from timecopilot.models.foundation.timesfm import TimesFM
-from timecopilot.models.foundation.toto import Toto
-# ml models
-from timecopilot.models.ml import AutoLGBM
-# nn models
-from timecopilot.models.neural import AutoNHITS, AutoTFT
-
 import nest_asyncio
 
 nest_asyncio.apply()
@@ -50,10 +25,11 @@ def main():
     df_train = df[df['ds'] < limit_date].copy()
     df_test = df[df['ds'] >= limit_date].copy()
 
-    user_query = 'Please do a decomposition and separate the trend and seasonality. Please also provide the confidence intervals for the forecast. Please also provide an explanation of the forecast.'
+    user_query = ("Please do a decomposition and separate the trend and seasonality."
+                  "Please also provide the confidence intervals for the forecast."
+                  "Please also provide an explanation of the forecast.")
 
-    st = time.time()
-    tc = TimeCopilot(llm="The_LLM_you_selected", retries=3)
+    tc = TimeCopilot(llm="<The_LLM_you_selected>", retries=3)
     # listing all default models that timecopilot uses for forecasting and cross-validation.
     # DEFAULT_MODELS: list[Forecaster] = [
     #     ADIDA(), AutoARIMA(), AutoCES(), AutoETS(), CrostonClassic(), DynamicOptimizedTheta(),
@@ -61,7 +37,6 @@ def main():
     # ]
 
     result = tc.forecast(df=df_train[cols], query=user_query)
-    print(f"Run Time: {time.time() - st}")
     print(result.output.tsfeatures_analysis)
 
     answer = tc.query("Make a plot with the decomposition of the forecast and the confidence intervals.")

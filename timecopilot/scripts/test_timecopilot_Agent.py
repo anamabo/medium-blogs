@@ -1,32 +1,7 @@
 import os
 import pandas as pd
 from timecopilot import TimeCopilot
-from pydantic_ai.models.bedrock import BedrockConverseModel
-
-from pydantic_ai.models.openai import OpenAIChatModel
-from pydantic_ai.providers.openai import OpenAIProvider
-from pydantic_ai.providers.ollama import OllamaProvider
 from multiprocessing import Process, freeze_support
-import time
-
-from timecopilot.models.prophet import Prophet
-# statsmodels
-from timecopilot.models.stats import ADIDA, AutoARIMA, AutoCES, AutoETS, CrostonClassic, DynamicOptimizedTheta, HistoricAverage, IMAPA, SeasonalNaive, Theta, ZeroModel
-# foundation models
-from timecopilot.models.foundation.chronos import Chronos
-from timecopilot.models.foundation.flowstate import FlowState
-from timecopilot.models.foundation.moirai import Moirai
-from timecopilot.models.foundation.sundial import Sundial
-from timecopilot.models.foundation.tabpfn import TabPFN
-from timecopilot.models.foundation.tirex import TiRex
-from timecopilot.models.foundation.timegpt import TimeGPT
-from timecopilot.models.foundation.timesfm import TimesFM
-from timecopilot.models.foundation.toto import Toto
-# ml models
-from timecopilot.models.ml import AutoLGBM
-# nn models
-from timecopilot.models.neural import AutoNHITS, AutoTFT
-
 import nest_asyncio
 
 nest_asyncio.apply()
@@ -50,8 +25,7 @@ def main():
     df_train = df[df['ds'] < limit_date].copy()
     df_test = df[df['ds'] >= limit_date].copy()
 
-    st = time.time()
-    tc = TimeCopilot(llm="The LLM you selected", retries=3)
+    tc = TimeCopilot(llm="<The LLM you selected>", retries=3)
     # listing all default models that timecopilot uses for forecasting and cross-validation.
     # DEFAULT_MODELS: list[Forecaster] = [
     #     ADIDA(), AutoARIMA(), AutoCES(), AutoETS(), CrostonClassic(), DynamicOptimizedTheta(),
@@ -59,16 +33,11 @@ def main():
     # ]
 
     result = tc.forecast(df=df_train[cols])
-    print(f"Run Time: {time.time() - st}")
     print(result.output.tsfeatures_analysis)
 
-    answer = tc.query("Which model performed best?, Are there anomalies?. Show the forecast with the best model for 12 future points.")
-    print(answer.output)
-
-    answer = tc.query("Are there anomalies?")
-    print(answer.output)
-
-    answer = tc.query("Show the forecast with the best model for 12 future points.")
+    answer = tc.query("Which model performed best?,"
+                      "Are there anomalies?."
+                      "Show the forecast with the best model for 12 future points.")
     print(answer.output)
 
 
@@ -80,7 +49,6 @@ if __name__ == '__main__':
 """
 OUTPUT OBTAINED AFTER RUNNING THE CODE
 
-Run Time: 29.149405479431152
 Key feature take‑aways:
 - series_length = 1392 (daily data over ~3.8 years).
 - flat_spots = 346, indicating many consecutive zeroes at the start and at the end.
@@ -150,4 +118,54 @@ So, yes – the series contains anomalous points.
 | 2023‑11‑03 | 0.00000897 |
 | 2023‑11‑04 | 0.00001193 |
 | 2023‑11‑05 | 0.00000908 |
+"""
+
+"""
+OUTPUT OBTAINED AFTER RUNNING THE CODE
+
+'The series (1,392 daily points) shows clear non‑stationarity (KPSS=1.94, PP≈‑19.7) and 
+a strong deterministic trend (STL trend ≈ 0.80). Autocorrelation is extremely high at lag 1 (≈ 0.97) 
+and remains elevated further out, indicating strong short‑term dependence and possible weak weekly seasonality. 
+The high lag‑1 ACF combined with the trend suggests that models which can difference the series and capture AR dynamics 
+will be most effective.', 
+selected_model='DynamicOptimizedTheta', model_details='DynamicOptimizedTheta is a modern variant of the Theta method 
+    that optimizes the Theta parameter dynamically via cross‑validation. It decomposes the series into a 
+    trend component (obtained by a simple moving average) and a curvature component, then rescales the curvature with a Theta 
+    factor that best fits the data. The method works well for series with strong trends and moderate seasonality, providing 
+    accurate point forecasts and prediction intervals.', 
+model_comparison='Cross‑validation (MASE) results:
+- ADIDA: 2.6e‑19
+- AutoARIMA: 9.0e‑05
+- AutoCES: 2.8e‑08
+- AutoETS: 0.0
+- CrostonClassic: 0.1512
+- DynamicOptimizedTheta: 9.4e‑152
+- HistoricAverage: 5.44
+- IMAPA: 2.6e‑19
+- SeasonalNaive: 0.0
+- Theta: 0.00277
+- ZeroModel: 0.0
+- Prophet: 0.978
+
+SeasonalNaive and ZeroModel report a perfect (zero) MASE because they simply repeat the last observed value, which is not 
+appropriate for a series with a strong upward trend and changing variance. Among the models that actually capture the 
+trend and autocorrelation, **DynamicOptimizedTheta** achieves the smallest realistic error (≈9 × 10⁻152), far 
+outperforming SeasonalNaive in practice.', is_better_than_seasonal_naive=True, reason_for_selection='DynamicOptimizedTheta 
+delivered the lowest realistic MASE (≈ 9 × 10⁻152) among all evaluated models, indicating an almost perfect 
+fit to the underlying trend and autocorrelation structure while avoiding the artifacts that cause SeasonalNaive and ZeroModel 
+to report a zero error. Its ability to model both trend and curvature makes it ideal for this long, non‑stationary series.', 
+forecast_analysis="Forecast for the next two days (2023‑10‑25 and 2023‑10‑26) using DynamicOptimizedTheta:
+- 2023‑10‑25 (1698278400000): 1.75 × 10⁻151
+- 2023‑10‑26 (1698364800000): 1.75 × 10⁻151
+These values are effectively zero on the original scale, reflecting that the model predicts the series will remain at a 
+very low level after the recent decline. Because the forecast is essentially flat and near zero, confidence intervals 
+(not shown) are expected to be narrow relative to the series' historic volatility, but users should still consider the 
+high heteroscedasticity observed in recent periods.", anomaly_analysis='Using DynamicOptimizedTheta at a 95 % confidence 
+level, 61 anomalies (≈ 4.4 % of observations) were detected. Anomalies concentrate in late 2021 and 
+early 2022 (e.g., 2021‑11‑11, 2022‑01‑06, 2022‑01‑13) and correspond to abrupt spikes or drops that deviate sharply from 
+the smooth trend captured by the model. Likely causes include sudden market shocks, data‑entry errors, or external events. 
+These outliers increase residual variance and can widen forecast intervals; cleaning or robustifying against them would improve 
+forecast stability.', user_query_response='You asked to “complete system prompt”. The full forecasting workflow—including feature 
+extraction, model evaluation, selection of DynamicOptimizedTheta (which outperforms SeasonalNaive), forecasting, and anomaly 
+detection—has now been completed and presented above.')).
 """
