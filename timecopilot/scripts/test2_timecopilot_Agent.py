@@ -25,21 +25,17 @@ def main():
     df_train = df[df['ds'] < limit_date].copy()
     df_test = df[df['ds'] >= limit_date].copy()
 
-    user_query = ("Please do a decomposition and separate the trend and seasonality."
-                  "Please also provide the confidence intervals for the forecast."
-                  "Please also provide an explanation of the forecast.")
-
-    tc = TimeCopilot(llm="<The_LLM_you_selected>", retries=3)
+    tc = TimeCopilot(llm="<The LLM you selected>", retries=3)
     # listing all default models that timecopilot uses for forecasting and cross-validation.
     # DEFAULT_MODELS: list[Forecaster] = [
     #     ADIDA(), AutoARIMA(), AutoCES(), AutoETS(), CrostonClassic(), DynamicOptimizedTheta(),
     #     HistoricAverage(), IMAPA(), SeasonalNaive(), Theta(), ZeroModel(), Prophet(),
     # ]
 
-    result = tc.forecast(df=df_train[cols], query=user_query)
+    result = tc.forecast(df=df_train[cols])
     print(result.output.tsfeatures_analysis)
 
-    answer = tc.query("Make a plot with the decomposition of the forecast and the confidence intervals.")
+    answer = tc.query("Make a plot with the decomposition of the time_series.")
     print(answer.output)
 
     answer = tc.query("Which model performed best?")
@@ -69,6 +65,7 @@ The time series features reveal several important characteristics about the data
 5. Length: 1095 observations representing approximately 3 years of daily data
 6. Low lumpiness (0.0477) and moderate entropy (0.4216) - suggesting relatively smooth transitions
 7. No seasonal period detected (seasonal_period: 1) - indicating no clear seasonal pattern
+8. The STL (Seasonal and Trend decomposition) features aren't available in this analysis.
 
 The series shows a strong trend component with high persistence but no clear seasonality. The non-stationarity suggests that 
 differencing or trend modeling will be important for accurate forecasting. The high stability indicates that the underlying 
