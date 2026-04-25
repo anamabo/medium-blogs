@@ -8,4 +8,4 @@ making time series analysis accessible while maintaining professional accuracy.
 In the Scripts folder you will find examples of usage of the agent and the forecaster.
 For more information about TimeCopilot, visit its GitHub repository [here](https://github.com/TimeCopilot/timecopilot).
 
-The blog post associated with this code can be found [here]().
+The blog post associated with this code can be found in Medium under the title: [TimeCopilot: Automatic time series analysis & pipeline](https://medium.com/towards-artificial-intelligence/timecopilot-automatic-time-series-analysis-pipeline-0cd5d5f2325d).

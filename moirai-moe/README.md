@@ -1,7 +1,7 @@
 # Moirai-MoE: Time Series Foundation Models with Sparce Mixture of Experts
 
 Welcome to this repository! Here you find the codes related to the blog post written in medium:
-[TBD]().
+[How to do Zero-Shot forecasts with Moirai-MoE in Python](https://medium.com/data-science-collective/zero-shot-forecast-with-moirai-moe-f81c764bf0e2).
 
 ### Requirements
 * Python 3.12
